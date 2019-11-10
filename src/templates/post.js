@@ -2,6 +2,7 @@ import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+import FormattedText from "../components/formattedText"
 import Comments from "../components/comments"
 
 export default ({ data }) => {
@@ -18,28 +19,12 @@ export default ({ data }) => {
     <Layout>
       <SEO title={title} />
       <h1>{title}</h1>
-      <p className="create">{created}</p>
-      {format === "plain_text" ? (
-        <BodyContentPlain content={content} />
-      ) : (
-        <BodyContentHtml content={content} />
-      )}
+      <p className="created">{created}</p>
+      <FormattedText content={content} format={format} />
       <Comments nid={nid} />
       <hr />
     </Layout>
   )
-}
-
-const BodyContentPlain = ({ content }) => (
-  <article>
-    {content.split("\n\n").map(paragraph => (
-      <p>{paragraph}</p>
-    ))}
-  </article>
-)
-
-const BodyContentHtml = ({ content }) => {
-  return <article dangerouslySetInnerHTML={{ __html: content }} />
 }
 
 export const query = graphql`
