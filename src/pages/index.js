@@ -1,21 +1,77 @@
 import React from "react"
-import { Link } from "gatsby"
+import { graphql, Link } from "gatsby"
 
 import Layout from "../components/layout"
-import Image from "../components/image"
 import SEO from "../components/seo"
 
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
+const IndexPage = ({ data }) => {
+  const edges = data.allNodeArticle.edges
+  return (
+    <Layout>
+      <SEO title="Recent Articles" />
+      {edges &&
+        edges.map(edge => {
+          console.log(edge)
+          let {
+            node: {
+              drupal_internal__nid: nid,
+              title,
+              created,
+              body: { summary },
+              path: { alias },
+            },
+          } = edge
+
+          return (
+            <PostExcerpt
+              nid={nid}
+              alias={alias}
+              title={title}
+              created={created}
+              summary={summary}
+            />
+          )
+        })}
+    </Layout>
+  )
+}
+
+const PostExcerpt = ({ nid, alias, title, created, summary }) => (
+  <>
+    <div className="post-excerpt" key={nid}>
+      <h2>
+        <Link to={alias}>{title}</Link>
+      </h2>
+      <div className="created">{created}</div>
+      <div className="summary">
+        <p>
+          {summary.substring(0, 250)}... [<Link to={alias}>Read More</Link>]
+        </p>
+      </div>
     </div>
-    <Link to="/page-2/">Go to page 2</Link>
-  </Layout>
+    <hr />
+  </>
 )
+
+export const query = graphql`
+  query IndexQuery {
+    allNodeArticle(sort: { fields: created, order: DESC }, limit: 200) {
+      edges {
+        node {
+          body {
+            summary
+          }
+          title
+          drupal_internal__nid
+          path {
+            alias
+          }
+          status
+          created(formatString: "MMMM DD, YYYY")
+        }
+      }
+    }
+  }
+`
 
 export default IndexPage
