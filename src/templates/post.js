@@ -1,8 +1,8 @@
 import React from "react"
 import { graphql } from "gatsby"
+import NonStretchedImage from "../components/nonStretchedImage"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import FormattedText from "../components/formattedText"
 import Comments from "../components/comments"
 
 export default ({ data }) => {
@@ -11,17 +11,27 @@ export default ({ data }) => {
       title,
       created,
       nid,
-      body: { value: content, format },
+      body: { processed: content },
     },
   } = data
+
+  const image =
+    data.nodeArticle.relationships.field_image.localFile.childImageSharp
 
   return (
     <Layout>
       <SEO title={title} />
-      <h1>{title}</h1>
-      <p className="created">{created}</p>
-      <FormattedText content={content} format={format} />
-      <Comments nid={nid} />
+      <article>
+        <h1>{title}</h1>
+        <div className="created">{created}</div>
+        {image !== null && (
+          <div className="article-image">
+            <NonStretchedImage {...image} />
+          </div>
+        )}
+        <div className="post-content" dangerouslySetInnerHTML={{__html: content}}/>
+      </article>
+      <Comments nid={nid} key={nid} />
       <hr />
     </Layout>
   )
@@ -34,8 +44,19 @@ export const query = graphql`
       created(formatString: "MMMM DD, YYYY")
       nid: drupal_internal__nid
       body {
-        value
-        format
+        processed
+      }
+      relationships {
+        field_image {
+          localFile {
+            childImageSharp {
+              fluid(quality: 100) {
+                ...GatsbyImageSharpFluid
+                presentationWidth
+              }
+            }
+          }
+        }
       }
     }
   }

@@ -1,5 +1,6 @@
 import React from "react"
 import { graphql, Link } from "gatsby"
+import PropTypes from "prop-types"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
@@ -11,7 +12,6 @@ const IndexPage = ({ data }) => {
       <SEO title="Recent Articles" />
       {edges &&
         edges.map(edge => {
-          console.log(edge)
           let {
             node: {
               drupal_internal__nid: nid,
@@ -52,6 +52,14 @@ const PostExcerpt = ({ nid, alias, title, created, summary }) => (
     <hr />
   </>
 )
+
+PostExcerpt.propTypes = {
+  nid: PropTypes.number.isRequired,
+  alias: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  created: PropTypes.string.isRequired,
+  summary: PropTypes.string,
+}
 
 export const query = graphql`
   query IndexQuery {
