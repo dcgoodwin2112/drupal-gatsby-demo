@@ -6,25 +6,38 @@ const Comments = ({ nid }) => {
   let [comments, setComments] = useState(null)
 
   async function getComments() {
-    let delay = window.localStorage.getItem("fetchDelay")
-    console.log(delay)
 
     const response = await axios(
       `http://gatsby-demo.dd:8083/node/article/${nid}/comments`
     )
 
-    setComments(
-      response.data.map(comment => (
-        <div className="comment" style={{border: `1px solid #ccc`, margin: `1rem 0`, padding: `1rem`}}>
-          <div className="comment-subject">
-            <strong>Subject:</strong> {comment.subject}
-          </div>
-          <div className="comment-body">
-            <span dangerouslySetInnerHTML={{ __html: comment.comment_body }} />
-          </div>
-        </div>
-      ))
-    )
+    if (!response.data[0]["subject"]) {
+      setComments(<>This post has no comments yet</>)
+    } else {
+      setComments(
+        response.data.map(comment => {
+          return (
+            <div
+              className="comment"
+              style={{
+                border: `1px solid #ccc`,
+                margin: `1rem 0`,
+                padding: `1rem`,
+              }}
+            >
+              <div className="comment-subject">
+                <strong>Subject:</strong> {comment.subject}
+              </div>
+              <div className="comment-body">
+                <span
+                  dangerouslySetInnerHTML={{ __html: comment.comment_body }}
+                />
+              </div>
+            </div>
+          )
+        })
+      )
+    }
   }
 
   useEffect(() => {
