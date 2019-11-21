@@ -5,7 +5,7 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
-import React, { useState } from "react"
+import React from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 
@@ -38,7 +38,9 @@ const Layout = ({ children, isIndex }) => {
       >
         <div className="flex-container">
           <main>{children}</main>
-          {/* <aside>{isIndex === true ? <IndexSidebar /> : <PostSidebar />}</aside> */}
+          <aside>
+            <Sidebar />
+          </aside>
         </div>
         <footer>
           © {new Date().getFullYear()}, Built with

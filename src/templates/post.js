@@ -22,14 +22,17 @@ export default ({ data }) => {
     <Layout>
       <SEO title={title} />
       <article>
-        <h1>{title}</h1>
-        <div className="created">{created}</div>
         {image !== null && (
-          <div className="article-image">
+          <div className="article-image" style={{ marginBottom: `1.45rem` }}>
             <NonStretchedImage {...image} />
           </div>
         )}
-        <div className="post-content" dangerouslySetInnerHTML={{__html: content}}/>
+        <h1>{title}</h1>
+        <div className="created">{created}</div>
+        <div
+          className="post-content"
+          dangerouslySetInnerHTML={{ __html: content }}
+        />
       </article>
       <Comments nid={nid} key={nid} />
       <hr />

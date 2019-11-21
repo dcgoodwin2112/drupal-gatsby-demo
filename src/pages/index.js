@@ -8,7 +8,7 @@ import SEO from "../components/seo"
 const IndexPage = ({ data }) => {
   const edges = data.allNodeArticle.edges
   return (
-    <Layout>
+    <Layout isIndex={true}>
       <SEO title="Recent Articles" />
       {edges &&
         edges.map(edge => {
@@ -25,6 +25,7 @@ const IndexPage = ({ data }) => {
           return (
             <PostExcerpt
               nid={nid}
+              key={nid}
               alias={alias}
               title={title}
               created={created}
@@ -38,7 +39,7 @@ const IndexPage = ({ data }) => {
 
 const PostExcerpt = ({ nid, alias, title, created, summary }) => (
   <>
-    <div className="post-excerpt" key={nid}>
+    <div className="post-excerpt">
       <h2>
         <Link to={alias}>{title}</Link>
       </h2>

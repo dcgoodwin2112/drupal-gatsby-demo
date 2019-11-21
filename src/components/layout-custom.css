@@ -21,10 +21,10 @@ a, a:visited {
 }
 
 .flex-container aside {
-  flex-basis: 20%
+  flex-basis: 25%
 }
 
-@media only screen and (max-width: 558px) {
+@media only screen and (max-width: 578px) {
   .flex-container main,
   .flex-container aside {
     flex-basis: 100%;

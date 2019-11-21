@@ -6,7 +6,6 @@ const Comments = ({ nid }) => {
   let [comments, setComments] = useState(null)
 
   async function getComments() {
-
     const response = await axios(
       `http://gatsby-demo.dd:8083/node/article/${nid}/comments`
     )
@@ -19,13 +18,14 @@ const Comments = ({ nid }) => {
           return (
             <div
               className="comment"
+              key={`${comment.created}${comment.subject}`}
               style={{
                 border: `1px solid #ccc`,
                 margin: `1rem 0`,
                 padding: `1rem`,
               }}
             >
-              <div className="comment-subject">
+              <div className="comment-subject" style={{ marginBottom: `1rem` }}>
                 <strong>Subject:</strong> {comment.subject}
               </div>
               <div className="comment-body">
