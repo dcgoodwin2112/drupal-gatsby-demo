@@ -8,7 +8,6 @@ import Img from "gatsby-image"
  * @param {*} props
  */
 const NonStretchedImage = props => {
-  console.log(props)
   let normalizedProps = props
   if (props.fluid && props.fluid.presentationWidth) {
     normalizedProps = {

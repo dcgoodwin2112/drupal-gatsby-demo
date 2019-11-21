@@ -35,7 +35,7 @@ const SidebarBlock = ({ title, content }) => (
       backgroundColor: `#0678be`,
       color: `#fff`,
       padding: `1rem`,
-      marginBottom: `1.45rem`,
+      marginBottom: `1.85rem`,
     }}
   >
     <h3>{title}</h3>
