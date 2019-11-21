@@ -24,7 +24,6 @@ const IndexPage = ({ data }) => {
 
           return (
             <PostExcerpt
-              nid={nid}
               key={nid}
               alias={alias}
               title={title}
@@ -37,7 +36,7 @@ const IndexPage = ({ data }) => {
   )
 }
 
-const PostExcerpt = ({ nid, alias, title, created, summary }) => (
+const PostExcerpt = ({ alias, title, created, summary }) => (
   <>
     <div className="post-excerpt">
       <h2>
